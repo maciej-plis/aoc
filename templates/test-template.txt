@@ -1,0 +1,44 @@
+import org.junit.jupiter.api.Test
+import kotlin.io.path.readText
+import kotlin.test.assertEquals
+
+internal class Day${day}Test {
+
+    private val day${day} = Day${day}()
+
+    @Test
+    fun part1_testInput() {
+        val input = readResourceFile("day-${day}/part-1-test").readText()
+
+        val output = day${day}.solvePart1(input)
+
+        assertEquals(TODO(), output)
+    }
+
+    @Test
+    fun part1_fullInput() {
+        val input = readResourceFile("day-${day}/full").readText()
+
+        val output = day${day}.solvePart1(input)
+
+        assertEquals(TODO(), output)
+    }
+
+    @Test
+    fun part2_testInput() {
+        val input = readResourceFile("day-${day}/part-2-test").readText()
+
+        val output = day${day}.solvePart2(input)
+
+        assertEquals(TODO(), output)
+    }
+
+    @Test
+    fun part2_fullInput() {
+        val input = readResourceFile("day-${day}/full").readText()
+
+        val output = day${day}.solvePart2(input)
+
+        assertEquals(TODO(), output)
+    }
+}
