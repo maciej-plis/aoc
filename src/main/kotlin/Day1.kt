@@ -10,25 +10,16 @@ internal class Day1 {
 
     fun solvePart2(input: String): Int {
         return input.lines().sumOf {
-            val first = it.findAnyOf(digits.keys, ignoreCase = true)?.second?.textToDigit()!!
-            val last = it.findLastAnyOf(digits.keys, ignoreCase = true)?.second?.textToDigit()!!
+            val first = it.findAnyOf(digits + textDigits.keys)?.second?.textToDigit()!!
+            val last = it.findLastAnyOf(digits + textDigits.keys)?.second?.textToDigit()!!
             return@sumOf "$first$last".toInt()
         }
     }
 
-    private fun String.textToDigit() = digits[this]
-
+    private fun String.textToDigit() = if(length == 1 && first().isDigit()) first().digitToInt() else textDigits[this]
     companion object {
-        val digits = mapOf(
-            "1" to 1,
-            "2" to 2,
-            "3" to 3,
-            "4" to 4,
-            "5" to 5,
-            "6" to 6,
-            "7" to 7,
-            "8" to 8,
-            "9" to 9,
+        val digits = listOf("1","2","3","4","5","6","7","8","9")
+        val textDigits = mapOf(
             "one" to 1,
             "two" to 2,
             "three" to 3,
