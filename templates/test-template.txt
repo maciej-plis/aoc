@@ -12,7 +12,7 @@ internal class Day${day}Test {
 
         val output = day${day}.solvePart1(input)
 
-        assertEquals(TODO(), output)
+        assertEquals(-1, output)
     }
 
     @Test
@@ -21,7 +21,7 @@ internal class Day${day}Test {
 
         val output = day${day}.solvePart1(input)
 
-        assertEquals(TODO(), output)
+        assertEquals(-1, output)
     }
 
     @Test
@@ -30,7 +30,7 @@ internal class Day${day}Test {
 
         val output = day${day}.solvePart2(input)
 
-        assertEquals(TODO(), output)
+        assertEquals(-1, output)
     }
 
     @Test
@@ -39,6 +39,6 @@ internal class Day${day}Test {
 
         val output = day${day}.solvePart2(input)
 
-        assertEquals(TODO(), output)
+        assertEquals(-1, output)
     }
 }

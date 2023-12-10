@@ -1,10 +1,10 @@
 internal class Day${day} {
 
-    fun solvePart1(input: String): String {
+    fun solvePart1(input: String): Int {
         TODO()
     }
 
-    fun solvePart2(input: String): String {
+    fun solvePart2(input: String): Int {
         TODO()
     }
 }
