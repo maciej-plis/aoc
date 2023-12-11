@@ -67,15 +67,6 @@ internal class Day10 {
         return count
     }
 
-    fun List<String>.contains(position: Pair<Int, Int>): Boolean = getOrNull(position.first)?.getOrNull(position.second)?.let { true } ?: false
-    fun List<String>.charAt(position: Pair<Int, Int>): Char = this[position.first][position.second]
-    fun List<String>.positionOf(searched: Char): Pair<Int, Int> {
-        this.forEachIndexed { x, line ->
-            line.forEachIndexed { y, char -> if (char == searched) return x to y }
-        }
-        error("Searched element '$searched' was not found")
-    }
-
     fun Travel.goToNext(pipeMap: List<String>): Travel {
         val pipe = pipeMap[next.first][next.second]
         val (output1, output2) = pipe.getOutputs(next)
