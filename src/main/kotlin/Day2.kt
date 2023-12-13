@@ -1,46 +1,36 @@
-import Day2.Color.*
+private val GAME_ID_REGEX = """Game (?<gameId>\d+): """.toRegex()
+private val PLAY_REGEX = """(((?<red>\d+) red|(?<green>\d+) green|(?<blue>\d+) blue),?\s?){1,3}""".toRegex()
+
+private data class Play(val red: Int?, val green: Int?, val blue: Int?)
+private data class Game(val id: Int, val plays: List<Play>)
 
 internal class Day2 {
 
     fun solvePart1(input: String): Int {
-        return input.lines()
-                .map(this::parseGames)
-                .filter {
-                    it.second.all {
-                        (it[RED] ?: 0) <= RED_CONSTRAINT && (it[GREEN] ?: 0) <= GREEN_CONSTRAINT && (it[BLUE]
-                                ?: 0) <= BLUE_CONSTRAINT
-                    }
-                }
-                .sumOf { it.first }
+        return input.lineSequence()
+            .map(this::parseGame)
+            .filter { gamePlaysDontExceedLimit(it, 12, 13, 14) }
+            .sumOf { it.id }
     }
 
     fun solvePart2(input: String): Int {
-        return input.lines()
-                .map { parseGames(it).second }
-                .map {
-                    val red = it.maxOf { it[RED] ?: 1 }
-                    val green = it.maxOf { it[GREEN] ?: 1 }
-                    val blue = it.maxOf { it[BLUE] ?: 1 }
-                    return@map red * green * blue
-                }
-                .sum()
+        return input.lineSequence()
+            .map { parseGame(it).plays }
+            .sumOf {
+                it.maxOf { it.red ?: 1 } *
+                it.maxOf { it.green ?: 1 } *
+                it.maxOf { it.blue ?: 1 }
+            }
     }
 
-    private fun parseGames(line: String): Pair<Int, List<Map<Color, Int>>> {
-        val lineElements = line.split(": ")
-        val gameId = lineElements[0].split(" ")[1].toInt()
-        val draws = lineElements[1].split("; ")
-                .map { it.split(", ").map { it.split(" ") }.associate { Color.valueOf(it[1].uppercase()) to it[0].toInt() } }
-        return gameId to draws
+    private fun gamePlaysDontExceedLimit(game: Game, redLimit: Int, greenLimit: Int, blueLimit: Int) = game.plays.all {
+        (it.red ?: 0) <= redLimit &&
+        (it.green ?: 0) <= greenLimit &&
+        (it.blue ?: 0) <= blueLimit
     }
 
-    enum class Color {
-        RED, GREEN, BLUE
-    }
-
-    companion object {
-        const val RED_CONSTRAINT = 12
-        const val GREEN_CONSTRAINT = 13
-        const val BLUE_CONSTRAINT = 14
-    }
+    private fun parseGame(line: String) = Game(
+        GAME_ID_REGEX.findValue(line, "gameId")?.toInt() ?: error("Game id not found"),
+        PLAY_REGEX.findValues(line, setOf("red", "green", "blue")).map { Play(it["red"]?.toInt(), it["green"]?.toInt(), it["blue"]?.toInt()) }
+    )
 }
