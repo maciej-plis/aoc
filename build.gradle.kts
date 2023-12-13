@@ -18,6 +18,11 @@ testing {
     }
 }
 
+tasks.test {
+    minHeapSize = "1024m"
+    maxHeapSize = "2048m"
+}
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
