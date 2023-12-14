@@ -1,6 +1,5 @@
 import kotlin.math.nextDown
 import kotlin.math.nextUp
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 internal class Day6 {
@@ -21,10 +20,10 @@ internal class Day6 {
         return solveEquation(time, distance)
     }
 
-    fun solveEquation(time: Long, distance: Long): Long {
-        val deltaSqrt = sqrt(time.toDouble().pow(2) - 4 * distance)
+    private fun solveEquation(time: Long, distance: Long): Long {
+        val deltaSqrt = sqrt(time.pow(2) - 4 * distance)
         val x1 = (time - deltaSqrt) / 2
         val x2 = (time + deltaSqrt) / 2
-        return (x1.nextUp().ceil().toLong()..x2.nextDown().floor().toLong()).size
+        return (x1.nextUp().ceil()..x2.nextDown().floor()).size.toLong()
     }
 }
