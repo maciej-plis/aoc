@@ -13,6 +13,7 @@ internal class Day14 {
     fun solvePart1(input: String): Int {
         val map = input.to2DCharArray()
         tiltMap(map, NORTH)
+
         return map.reversed()
             .mapIndexed { index, chars -> (index + 1) * chars.count { it == ROUNDED_ROCK } }
             .sum()
@@ -20,7 +21,7 @@ internal class Day14 {
 
     fun solvePart2(input: String): Int {
         val map = input.to2DCharArray()
-        val mapCycles = mutableListOf(map.joinToString())
+        val mapCycles = mutableListOf(map.join2DArrayToString())
         val cycles = 1_000_000_000
 
         for (i in 1..cycles) {
@@ -29,50 +30,55 @@ internal class Day14 {
             tiltMap(map, SOUTH)
             tiltMap(map, EAST)
 
-            val mapString = map.joinToString()
+            val mapString = map.join2DArrayToString()
             if (mapCycles.contains(mapString)) break
             mapCycles += mapString
         }
 
-        val startAt = mapCycles.indexOf(map.joinToString())
+        val startAt = mapCycles.indexOf(map.join2DArrayToString())
         val endAt = mapCycles.lastIndex
         val size = endAt - startAt + 1
-        val resultIndex = (((cycles - startAt) % size) + size) % size + startAt
+        val resultIndex = (cycles - startAt + size) % size + startAt
 
         return mapCycles[resultIndex].lines().reversed()
             .mapIndexed { index, line -> (index + 1) * line.count { it == ROUNDED_ROCK } }
             .sum()
     }
 
-    private fun Array<CharArray>.joinToString(lineSeparator: String = "\n", itemSeparator: String = "") =
-        map { it.joinToString(itemSeparator) }.joinToString(lineSeparator)
+    private fun tiltMap(map: Array<CharArray>, direction: Direction) = when (direction) {
+        NORTH, SOUTH -> tiltMapNorthSouth(map, direction)
+        EAST, WEST -> tiltMapEastWest(map, direction)
+    }
 
-    private fun tiltMap(map: Array<CharArray>, direction: Direction) {
-        val horizontalProgression = if (direction == SOUTH) map.indices.reversed() else map.indices
-        val verticalProgression = if (direction == EAST) map.first().indices.reversed() else map.first().indices
+    private fun tiltMapNorthSouth(map: Array<CharArray>, direction: Direction) {
+        val horizontalProgression = map.indices.let { if (direction == SOUTH) it.reversed() else it }
+        val verticalProgression = map.first().indices
 
-        if (direction == EAST || direction == WEST) {
+        for (y in verticalProgression) {
+            var freeTile = Vec2(horizontalProgression.first, y)
             for (x in horizontalProgression) {
-                var freeTile = Vec2(x, verticalProgression.first)
-                for (y in verticalProgression) {
-                    if (map[x][y] == ROUNDED_ROCK) {
-                        map.swapValues(Vec2(x, y), freeTile)
-                        freeTile = Vec2(x, freeTile.y + verticalProgression.step)
-                    } else if (map[x][y] == CUBE_ROCK) {
-                        freeTile = Vec2(x, y + verticalProgression.step)
-                    }
+                if (map[x][y] == ROUNDED_ROCK) {
+                    map.swapValues(Vec2(x, y), freeTile)
+                    freeTile = Vec2(freeTile.x + horizontalProgression.step, y)
+                } else if (map[x][y] == CUBE_ROCK) {
+                    freeTile = Vec2(x + horizontalProgression.step, y)
                 }
             }
-        } else {
+        }
+    }
+
+    private fun tiltMapEastWest(map: Array<CharArray>, direction: Direction) {
+        val horizontalProgression = map.indices
+        val verticalProgression = map.first().indices.let { if (direction == EAST) it.reversed() else it }
+
+        for (x in horizontalProgression) {
+            var freeTile = Vec2(x, verticalProgression.first)
             for (y in verticalProgression) {
-                var freeTile = Vec2(horizontalProgression.first, y)
-                for (x in horizontalProgression) {
-                    if (map[x][y] == ROUNDED_ROCK) {
-                        map.swapValues(Vec2(x, y), freeTile)
-                        freeTile = Vec2(freeTile.x + horizontalProgression.step, y)
-                    } else if (map[x][y] == CUBE_ROCK) {
-                        freeTile = Vec2(x + horizontalProgression.step, y)
-                    }
+                if (map[x][y] == ROUNDED_ROCK) {
+                    map.swapValues(Vec2(x, y), freeTile)
+                    freeTile = Vec2(x, freeTile.y + verticalProgression.step)
+                } else if (map[x][y] == CUBE_ROCK) {
+                    freeTile = Vec2(x, y + verticalProgression.step)
                 }
             }
         }

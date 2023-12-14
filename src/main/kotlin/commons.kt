@@ -44,11 +44,15 @@ fun Array<CharArray>.swapValues(pos1: Vec2, pos2: Vec2) {
     this[pos1].let { this[pos1] = this[pos2]; this[pos2] = it }
 }
 
+fun Array<CharArray>.join2DArrayToString(lineSeparator: String = "\n", itemSeparator: String = "") =
+    map { it.joinToString(itemSeparator) }.joinToString(lineSeparator)
+
 fun List<String>.contains(position: Pair<Int, Int>): Boolean = getOrNull(position.first)?.getOrNull(position.second)?.let { true } ?: false
 fun List<String>.charAt(position: Pair<Int, Int>): Char = this[position.first][position.second]
 fun List<String>.replace(position: Pair<Int, Int>, replacement: Char) = mapIndexed { index, line ->
     if (position.first == index) StringBuilder(line).apply { setCharAt(position.second, replacement) }.toString() else line
 }
+
 fun List<String>.positionOf(searched: Char): Pair<Int, Int> {
     this.forEachIndexed { x, line ->
         line.forEachIndexed { y, char -> if (char == searched) return x to y }
