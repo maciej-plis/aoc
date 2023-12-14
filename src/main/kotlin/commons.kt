@@ -30,6 +30,20 @@ val LongRange.size
 fun Double.floor() = floor(this)
 fun Double.ceil() = ceil(this)
 
+data class Vec2(val x: Int, val y: Int) {
+    override fun toString() = "($x, $y)"
+}
+
+fun String.to2DCharArray() = lines().map { it.toCharArray() }.toTypedArray()
+operator fun Array<CharArray>.get(pos: Vec2): Char = this[pos.x][pos.y]
+operator fun Array<CharArray>.set(pos: Vec2, value: Char) {
+    this[pos.x][pos.y] = value
+}
+
+fun Array<CharArray>.swapValues(pos1: Vec2, pos2: Vec2) {
+    this[pos1].let { this[pos1] = this[pos2]; this[pos2] = it }
+}
+
 fun List<String>.contains(position: Pair<Int, Int>): Boolean = getOrNull(position.first)?.getOrNull(position.second)?.let { true } ?: false
 fun List<String>.charAt(position: Pair<Int, Int>): Char = this[position.first][position.second]
 fun List<String>.replace(position: Pair<Int, Int>, replacement: Char) = mapIndexed { index, line ->
