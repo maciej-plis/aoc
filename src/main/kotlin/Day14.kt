@@ -4,10 +4,6 @@ private const val ROUNDED_ROCK = 'O'
 private const val CUBE_ROCK = '#'
 private const val EMPTY_SPACE = '.'
 
-private enum class Direction {
-    NORTH, EAST, SOUTH, WEST
-}
-
 internal class Day14 {
 
     fun solvePart1(input: String): Int {

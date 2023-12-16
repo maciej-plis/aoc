@@ -31,10 +31,16 @@ fun Double.ceil() = ceil(this)
 
 data class Vec2(val x: Int, val y: Int) {
     override fun toString() = "($x, $y)"
+    fun up() = Vec2((x - 1), y)
+    fun down() = Vec2((x + 1), y)
+    fun left() = Vec2(x, (y - 1))
+    fun right() = Vec2(x, (y + 1))
 }
 
 fun String.to2DCharArray() = lines().map { it.toCharArray() }.toTypedArray()
 operator fun Array<CharArray>.get(pos: Vec2): Char = this[pos.x][pos.y]
+operator fun Array<CharArray>.contains(pos: Vec2): Boolean = getOrNull(pos.x)?.getOrNull(pos.y) != null
+fun Array<CharArray>.getOrNull(pos: Vec2): Char? = getOrNull(pos.x)?.getOrNull(pos.y)
 operator fun Array<CharArray>.set(pos: Vec2, value: Char) {
     this[pos.x][pos.y] = value
 }
@@ -61,3 +67,12 @@ fun List<String>.positionOf(searched: Char): Pair<Int, Int> {
 
 fun Regex.findValue(text: String, group: String) = find(text)?.groups?.get(group)?.value
 fun Regex.findValues(text: String, groups: Set<String>) = findAll(text).map { match -> groups.associateWith { match.groups.get(it)?.value } }.toList()
+
+enum class Direction {
+    NORTH, EAST, SOUTH, WEST
+}
+
+fun <T> Iterable<T>.countDistinct() = distinct().size
+fun <T, R> Iterable<T>.countDistinctOf(transform: (T) -> R) = map { transform(it) }.countDistinct()
+
+fun <T> hashSetOf(vararg elements: Iterable<T>) = HashSet<T>().apply { elements.forEach { addAll(it) } }
