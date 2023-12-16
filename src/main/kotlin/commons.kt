@@ -14,6 +14,7 @@ fun Iterable<Int>.product() = reduce(Int::times)
 fun Iterable<Long>.product() = reduce(Long::times)
 
 fun String.splitByWs() = split("\\s+".toRegex())
+fun String.splitByWsToSequence() = splitToSequence("\\s+".toRegex())
 
 fun Iterable<String>.toInt() = map(String::toInt)
 fun Iterable<String>.toLong() = map(String::toLong)
