@@ -2,10 +2,10 @@ import Direction.*
 import Mirror.*
 
 private data class LightBeam(val tile: Vec2, val direction: Direction) {
-    fun north() = LightBeam(tile.up(), NORTH)
-    fun east() = LightBeam(tile.right(), EAST)
-    fun south() = LightBeam(tile.down(), SOUTH)
-    fun west() = LightBeam(tile.left(), WEST)
+    fun north() = LightBeam(tile.north(), NORTH)
+    fun east() = LightBeam(tile.east(), EAST)
+    fun south() = LightBeam(tile.south(), SOUTH)
+    fun west() = LightBeam(tile.west(), WEST)
 }
 
 private sealed interface Mirror {
@@ -76,7 +76,7 @@ internal class Day16 {
 
     private fun solve(mirrorMap: Array<CharArray>, initialLightBeam: LightBeam): Int {
         val lightBeams = hashSetOf(initialLightBeam)
-        val travelingLightBeams = ArrayDeque<LightBeam>().apply { add(initialLightBeam) }
+        val travelingLightBeams = arrayDequeOf(initialLightBeam)
 
         while (travelingLightBeams.isNotEmpty()) {
             val lightBeam = travelingLightBeams.removeFirst()

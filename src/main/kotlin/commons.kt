@@ -1,3 +1,4 @@
+import Direction.*
 import kotlin.io.path.toPath
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -32,9 +33,27 @@ fun Double.ceil() = ceil(this)
 data class Vec2(val x: Int, val y: Int) {
     override fun toString() = "($x, $y)"
     fun up() = Vec2((x - 1), y)
+    fun north() = up()
     fun down() = Vec2((x + 1), y)
+    fun south() = down()
     fun left() = Vec2(x, (y - 1))
+    fun west() = left()
     fun right() = Vec2(x, (y + 1))
+    fun east() = right()
+    fun oneTo(direction: Direction) = when (direction) {
+        NORTH -> north()
+        EAST -> east()
+        SOUTH -> south()
+        WEST -> west()
+    }
+}
+
+fun String.to2DIntArray() = lines().map { it.map(Char::digitToInt).toIntArray() }.toTypedArray()
+operator fun Array<IntArray>.get(pos: Vec2): Int = this[pos.x][pos.y]
+operator fun Array<IntArray>.contains(pos: Vec2): Boolean = getOrNull(pos.x)?.getOrNull(pos.y) != null
+fun Array<IntArray>.getOrNull(pos: Vec2): Int? = getOrNull(pos.x)?.getOrNull(pos.y)
+operator fun Array<IntArray>.set(pos: Vec2, value: Int) {
+    this[pos.x][pos.y] = value
 }
 
 fun String.to2DCharArray() = lines().map { it.toCharArray() }.toTypedArray()
@@ -44,7 +63,6 @@ fun Array<CharArray>.getOrNull(pos: Vec2): Char? = getOrNull(pos.x)?.getOrNull(p
 operator fun Array<CharArray>.set(pos: Vec2, value: Char) {
     this[pos.x][pos.y] = value
 }
-
 fun Array<CharArray>.swapValues(pos1: Vec2, pos2: Vec2) {
     this[pos1].let { this[pos1] = this[pos2]; this[pos2] = it }
 }
@@ -75,4 +93,6 @@ enum class Direction {
 fun <T> Iterable<T>.countDistinct() = distinct().size
 fun <T, R> Iterable<T>.countDistinctOf(transform: (T) -> R) = map { transform(it) }.countDistinct()
 
-fun <T> hashSetOf(vararg elements: Iterable<T>) = HashSet<T>().apply { elements.forEach { addAll(it) } }
+fun <T> hashSetOf(vararg elements: Iterable<T>) = elements.toCollection(HashSet(elements.size)).flatten()
+fun <T> arrayDequeOf(vararg elements: T) = elements.toCollection(ArrayDeque(elements.size))
+fun <T> MutableSet<T>.addAll(vararg items: T) = items.forEach { add(it) }
