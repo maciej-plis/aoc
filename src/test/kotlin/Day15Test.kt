@@ -39,6 +39,6 @@ internal class Day15Test {
 
         val output = day15.solvePart2(input)
 
-        assertEquals(-1, output)
+        assertEquals(296921, output)
     }
 }

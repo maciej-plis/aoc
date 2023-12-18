@@ -30,6 +30,31 @@ val ClosedRange<Float>.size; get() = endInclusive - start + 1
 fun Double.floor() = floor(this)
 fun Double.ceil() = ceil(this)
 
+data class BigVec2(val x: Long, val y: Long) {
+    override fun toString() = "($x, $y)"
+    fun up() = BigVec2((x - 1), y)
+    fun north() = up()
+    fun down() = BigVec2((x + 1), y)
+    fun south() = down()
+    fun left() = BigVec2(x, (y - 1))
+    fun west() = left()
+    fun right() = BigVec2(x, (y + 1))
+    fun east() = right()
+    fun oneTo(direction: Direction) = when (direction) {
+        NORTH -> north()
+        EAST -> east()
+        SOUTH -> south()
+        WEST -> west()
+    }
+
+    fun manyTo(steps: Int, direction: Direction) = when (direction) {
+        NORTH -> BigVec2(x - steps, y)
+        EAST -> BigVec2(x, y + steps)
+        SOUTH -> BigVec2(x + steps, y)
+        WEST -> BigVec2(x, y - steps)
+    }
+}
+
 data class Vec2(val x: Int, val y: Int) {
     override fun toString() = "($x, $y)"
     fun up() = Vec2((x - 1), y)
@@ -45,6 +70,12 @@ data class Vec2(val x: Int, val y: Int) {
         EAST -> east()
         SOUTH -> south()
         WEST -> west()
+    }
+    fun manyTo(steps: Int, direction: Direction) = when (direction) {
+        NORTH -> Vec2(x - steps, y)
+        EAST -> Vec2(x, y + steps)
+        SOUTH -> Vec2(x + steps, y)
+        WEST -> Vec2(x, y - steps)
     }
 }
 
@@ -96,3 +127,5 @@ fun <T, R> Iterable<T>.countDistinctOf(transform: (T) -> R) = map { transform(it
 fun <T> hashSetOf(vararg elements: Iterable<T>) = elements.toCollection(HashSet(elements.size)).flatten()
 fun <T> arrayDequeOf(vararg elements: T) = elements.toCollection(ArrayDeque(elements.size))
 fun <T> MutableSet<T>.addAll(vararg items: T) = items.forEach { add(it) }
+
+fun String.getNumber(): Int = filter(Char::isDigit).toInt()
