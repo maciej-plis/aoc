@@ -1,3 +1,6 @@
+import commons.findValue
+import commons.findValues
+
 private val GAME_ID_REGEX = """Game (?<gameId>\d+): """.toRegex()
 private val PLAY_REGEX = """(((?<red>\d+) red|(?<green>\d+) green|(?<blue>\d+) blue),?\s?){1,3}""".toRegex()
 

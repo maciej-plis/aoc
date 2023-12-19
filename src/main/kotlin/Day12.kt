@@ -1,3 +1,5 @@
+import commons.splitByWs
+
 internal class Day12 {
 
     data class RecordEntry(val springsRecord: String, val brokenGroups: List<Int>)

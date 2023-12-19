@@ -1,3 +1,4 @@
+import commons.readResourceFile
 import org.junit.jupiter.api.Test
 import kotlin.io.path.readText
 import kotlin.test.assertEquals

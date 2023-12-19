@@ -1,7 +1,8 @@
-import Direction.*
 import Mirror.*
+import commons.*
+import commons.Direction.*
 
-private data class LightBeam(val tile: Vec2, val direction: Direction) {
+private data class LightBeam(val tile: Vector2, val direction: Direction) {
     fun north() = LightBeam(tile.north(), NORTH)
     fun east() = LightBeam(tile.east(), EAST)
     fun south() = LightBeam(tile.south(), SOUTH)
@@ -58,7 +59,7 @@ private sealed interface Mirror {
 
 internal class Day16 {
 
-    fun solvePart1(input: String) = solve(input.to2DCharArray(), LightBeam(Vec2(0, 0), EAST))
+    fun solvePart1(input: String) = solve(input.to2DCharArray(), LightBeam(Vector2(0, 0), EAST))
 
     fun solvePart2(input: String): Int {
         val mirrorMap = input.to2DCharArray()
@@ -66,12 +67,12 @@ internal class Day16 {
         val vertical = mirrorMap.indices
         val horizontal = mirrorMap.first().indices
 
-        val leftSide = vertical.map { x -> LightBeam(Vec2(x, horizontal.first), EAST) }
-        val rightSide = vertical.map { x -> LightBeam(Vec2(x, horizontal.last), WEST) }
-        val topSide = horizontal.map { y -> LightBeam(Vec2(vertical.first, y), SOUTH) }
-        val bottomSide = horizontal.map { y -> LightBeam(Vec2(vertical.last, y), NORTH) }
+        val leftSide = vertical.map { x -> LightBeam(Vector2(x, horizontal.first), EAST) }
+        val rightSide = vertical.map { x -> LightBeam(Vector2(x, horizontal.last), WEST) }
+        val topSide = horizontal.map { y -> LightBeam(Vector2(vertical.first, y), SOUTH) }
+        val bottomSide = horizontal.map { y -> LightBeam(Vector2(vertical.last, y), NORTH) }
 
-        return hashSetOf(leftSide, rightSide, topSide, bottomSide).maxOf { solve(mirrorMap, it) }
+        return commons.hashSetOf(leftSide, rightSide, topSide, bottomSide).maxOf { solve(mirrorMap, it) }
     }
 
     private fun solve(mirrorMap: Array<CharArray>, initialLightBeam: LightBeam): Int {
@@ -94,7 +95,7 @@ internal class Day16 {
         return lightBeams.countDistinctOf { it.tile }
     }
 
-    private fun Array<CharArray>.getMirrorAt(tile: Vec2) = when (this[tile]) {
+    private fun Array<CharArray>.getMirrorAt(tile: Vector2) = when (this[tile]) {
         '|' -> VerticalMirror
         '-' -> HorizontalMirror
         '/' -> RightAngleMirror

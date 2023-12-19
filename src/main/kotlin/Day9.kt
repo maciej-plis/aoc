@@ -1,3 +1,5 @@
+import commons.splitByWs
+
 internal class Day9 {
 
     val findNextElementOfSequence = DeepRecursiveFunction { sequence: List<Long> ->

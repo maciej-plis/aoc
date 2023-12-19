@@ -2,6 +2,7 @@ import Day7.Hand.Type
 import Day7.Hand.Type.*
 import Day7.RuleSet.Part1RuleSet
 import Day7.RuleSet.Part2RuleSet
+import commons.splitByWs
 
 internal class Day7 {
 
@@ -51,15 +52,18 @@ internal class Day7 {
             override val cardStrengths = listOf('2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A')
             override fun determineHandType(cards: String): Type = cards.groupingBy { it }
                 .eachCount()
+                .values
                 .let {
-                    if (it.values.any { it == 5 }) return FIVE_OF_A_KIND
-                    if (it.values.any { it == 4 }) return FOUR_OF_A_KIND
-                    if (it.values.any { it == 3 } && it.values.any { it == 2 }) return FULL_HOUSE
-                    if (it.values.any { it == 3 }) return THREE_OF_A_KIND
-                    if (it.values.count { it == 2 } == 2) return TWO_PAIR
-                    if (it.values.any { it == 2 }) return ONE_PAIR
-                    if (it.size == 5) return HIGH_CARD
-                    error("Undetermined hand type for: $it")
+                    when {
+                        5 in it -> FIVE_OF_A_KIND
+                        4 in it -> FOUR_OF_A_KIND
+                        3 in it && 2 in it -> FULL_HOUSE
+                        3 in it -> THREE_OF_A_KIND
+                        it.count { it == 2 } == 2 -> TWO_PAIR
+                        2 in it -> ONE_PAIR
+                        it.size == 5 -> HIGH_CARD
+                        else -> error("Undetermined hand type for: $it")
+                    }
                 }
         }
 

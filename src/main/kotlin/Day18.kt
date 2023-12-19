@@ -1,4 +1,7 @@
-import Direction.*
+import commons.Direction
+import commons.Direction.*
+import commons.LongVector2
+import commons.splitByWs
 
 internal class Day18 {
 
@@ -9,7 +12,7 @@ internal class Day18 {
     fun solvePart2(input: String) = solve(input, this::mapToCommandPart2)
 
     private fun solve(input: String, commandMapper: (String) -> Command): Long {
-        val startingPos = BigVec2(0, 0)
+        val startingPos = LongVector2(0, 0)
         val commands = input.lineSequence().map { commandMapper(it) }
 
         val boundaries = commands.sumOf { it.times }

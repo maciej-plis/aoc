@@ -1,10 +1,13 @@
 import Day13.Reflection.Type.HORIZONTAL
 import Day13.Reflection.Type.VERTICAL
+import commons.charAt
+import commons.replace
+import commons.size
 import kotlin.math.min
 
 internal class Day13 {
 
-    data class Reflection(val type: Type, val range: IntRange) {
+    private data class Reflection(val type: Type, val range: IntRange) {
         val leftOrAboveCools: Int; get() = (range.size / 2) + range.first
 
         enum class Type {
@@ -29,13 +32,13 @@ internal class Day13 {
             .sum()
     }
 
-    fun findReflection(pattern: List<String>): Reflection? {
+    private fun findReflection(pattern: List<String>): Reflection? {
         findHorizontalReflectionRange(pattern)?.let { return Reflection(HORIZONTAL, it) }
         findVerticalReflectionRange(pattern.rotate())?.let { return Reflection(VERTICAL, it) }
         return null
     }
 
-    fun findSmudgedReflection(pattern: List<String>, baseReflection: Reflection): Reflection? {
+    private fun findSmudgedReflection(pattern: List<String>, baseReflection: Reflection): Reflection? {
         for (x in pattern.indices) {
             for (y in pattern.first().indices) {
                 val smudge = pattern.charAt(x to y)
@@ -47,7 +50,7 @@ internal class Day13 {
         return null
     }
 
-    fun findHorizontalReflectionRange(pattern: List<String>, ignored: Set<Reflection> = emptySet()): IntRange? {
+    private fun findHorizontalReflectionRange(pattern: List<String>, ignored: Set<Reflection> = emptySet()): IntRange? {
         for (i in pattern.indices) {
             if (pattern[i] == pattern.getOrNull(i + 1)) {
                 val rangeSize = min(i, pattern.lastIndex - (i + 1))
@@ -60,7 +63,7 @@ internal class Day13 {
         return null
     }
 
-    fun findVerticalReflectionRange(pattern: List<String>, ignored: Set<Reflection> = emptySet()): IntRange? {
+    private fun findVerticalReflectionRange(pattern: List<String>, ignored: Set<Reflection> = emptySet()): IntRange? {
         for (i in pattern.indices) {
             if (pattern[i] == pattern.getOrNull(i + 1)) {
                 val rangeSize = min(i, pattern.lastIndex - (i + 1))
@@ -73,7 +76,7 @@ internal class Day13 {
         return null
     }
 
-    fun hasFullReflection(pattern: List<String>, range: IntRange): Boolean {
+    private fun hasFullReflection(pattern: List<String>, range: IntRange): Boolean {
         if (range.size % 2 != 0) error("Range should be even")
         for (i in 0..(range.size / 2)) {
             if (pattern[range.first + i] != pattern[range.last - i]) return false
@@ -81,7 +84,7 @@ internal class Day13 {
         return true
     }
 
-    fun computeResult(reflection: Reflection) = when (reflection.type) {
+    private fun computeResult(reflection: Reflection) = when (reflection.type) {
         VERTICAL -> reflection.leftOrAboveCools
         HORIZONTAL -> reflection.leftOrAboveCools * 100
     }

@@ -1,3 +1,6 @@
+import commons.findAll
+import commons.product
+
 internal class Day3 {
 
     data class Match<T>(val lineIndex: Int, val range: IntRange, val value: T)
@@ -30,13 +33,13 @@ internal class Day3 {
     }
 
     private fun List<String>.getAdjacentNumbers(x: Int, y: Int): List<Int> {
-        val numbers = mutableListOf<Int>()
-        for (i in x - 1..x + 1) {
-            if (this.getOrNull(i)?.getFullNumber(y)?.apply(numbers::add) != null) continue
-            this.getOrNull(i)?.getFullNumber(y - 1)?.let(numbers::add)
-            this.getOrNull(i)?.getFullNumber(y + 1)?.let(numbers::add)
+        return buildList {
+            for (i in x - 1..x + 1) {
+                if (this@getAdjacentNumbers.getOrNull(i)?.getFullNumber(y)?.apply(this::add) != null) continue
+                this@getAdjacentNumbers.getOrNull(i)?.getFullNumber(y - 1)?.let(this::add)
+                this@getAdjacentNumbers.getOrNull(i)?.getFullNumber(y + 1)?.let(this::add)
+            }
         }
-        return numbers
     }
 
     private fun String.getFullNumber(index: Int): Int? {

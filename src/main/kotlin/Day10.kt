@@ -1,3 +1,7 @@
+import commons.charAt
+import commons.contains
+import commons.positionOf
+
 internal class Day10 {
 
     data class Travel(val current: Pair<Int, Int>, val next: Pair<Int, Int>, val distance: Int)

@@ -1,4 +1,5 @@
-import Direction.*
+import commons.*
+import commons.Direction.*
 
 private const val ROUNDED_ROCK = 'O'
 private const val CUBE_ROCK = '#'
@@ -51,13 +52,13 @@ internal class Day14 {
         val verticalProgression = map.first().indices
 
         for (y in verticalProgression) {
-            var freeTile = Vec2(horizontalProgression.first, y)
+            var freeTile = Vector2(horizontalProgression.first, y)
             for (x in horizontalProgression) {
                 if (map[x][y] == ROUNDED_ROCK) {
-                    map.swapValues(Vec2(x, y), freeTile)
-                    freeTile = Vec2(freeTile.x + horizontalProgression.step, y)
+                    map.swapValues(Vector2(x, y), freeTile)
+                    freeTile = Vector2(freeTile.x + horizontalProgression.step, y)
                 } else if (map[x][y] == CUBE_ROCK) {
-                    freeTile = Vec2(x + horizontalProgression.step, y)
+                    freeTile = Vector2(x + horizontalProgression.step, y)
                 }
             }
         }
@@ -68,13 +69,13 @@ internal class Day14 {
         val verticalProgression = map.first().indices.let { if (direction == EAST) it.reversed() else it }
 
         for (x in horizontalProgression) {
-            var freeTile = Vec2(x, verticalProgression.first)
+            var freeTile = Vector2(x, verticalProgression.first)
             for (y in verticalProgression) {
                 if (map[x][y] == ROUNDED_ROCK) {
-                    map.swapValues(Vec2(x, y), freeTile)
-                    freeTile = Vec2(x, freeTile.y + verticalProgression.step)
+                    map.swapValues(Vector2(x, y), freeTile)
+                    freeTile = Vector2(x, freeTile.y + verticalProgression.step)
                 } else if (map[x][y] == CUBE_ROCK) {
-                    freeTile = Vec2(x, y + verticalProgression.step)
+                    freeTile = Vector2(x, y + verticalProgression.step)
                 }
             }
         }

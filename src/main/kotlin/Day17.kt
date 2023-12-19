@@ -1,8 +1,9 @@
-import Direction.*
+import commons.*
+import commons.Direction.*
 import java.util.*
 import java.util.Comparator.comparingInt
 
-private data class Travel(val position: Vec2, val direction: Direction, val distance: Int, val forwardCount: Int = 1) {
+private data class Travel(val position: Vector2, val direction: Direction, val distance: Int, val forwardCount: Int = 1) {
     fun getPossibleDestinations(map: Array<IntArray>) = buildSet {
         if (forwardCount < 10) position.oneTo(direction).takeIf(map::contains)?.let { Travel(it, direction, distance + map[it], forwardCount + 1).let(this::add) }
         if (forwardCount >= 4) {
@@ -45,10 +46,10 @@ internal class Day17 {
 
     fun solvePart1(input: String): Int {
         val map = input.to2DIntArray()
-        val startingPos = Vec2(0, 0)
-        val endingPos = Vec2(map.lastIndex, map.first().lastIndex)
+        val startingPos = Vector2(0, 0)
+        val endingPos = Vector2(map.lastIndex, map.first().lastIndex)
 
-        val shortestPaths = HashMap<Vec2, Int>()
+        val shortestPaths = HashMap<Vector2, Int>()
         val traveledNodes = HashSet<Travel>()
         val currentTravels = PriorityQueue<Travel>(comparingInt { it.distance }).apply {
             add(Travel(startingPos, EAST, 0))
@@ -67,10 +68,10 @@ internal class Day17 {
 
     fun solvePart2(input: String): Int {
         val map = input.to2DIntArray()
-        val startingPos = Vec2(0, 0)
-        val endingPos = Vec2(map.lastIndex, map.first().lastIndex)
+        val startingPos = Vector2(0, 0)
+        val endingPos = Vector2(map.lastIndex, map.first().lastIndex)
 
-        val shortestPaths = HashMap<Vec2, Int>()
+        val shortestPaths = HashMap<Vector2, Int>()
         val traveledNodes = HashSet<Travel>()
         val currentTravels = PriorityQueue<Travel>(comparingInt { it.distance }).apply {
             add(Travel(startingPos, EAST, 0))
