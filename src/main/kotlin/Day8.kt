@@ -1,3 +1,5 @@
+import commons.lcm
+
 internal class Day8 {
 
     fun solvePart1(input: String): Int {
@@ -29,21 +31,6 @@ internal class Day8 {
         }
 
         return step
-    }
-
-    fun ncd(number1: Long, number2: Long): Long {
-        var a = number1
-        var b = number2
-        while (b != 0L) {
-            val t = b
-            b = a % b
-            a = t
-        }
-        return a
-    }
-
-    fun lcm(number1: Long, number2: Long): Long {
-        return (number1 * number2) / ncd(number1, number2)
     }
 
     fun parseNetwork(input: String): Map<String, Pair<String, String>> = input.lineSequence()
