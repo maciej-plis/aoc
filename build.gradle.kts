@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.21"
+    kotlin("jvm") version "2.0.20"
 }
 
 group = "com.matthias"
@@ -13,7 +13,7 @@ dependencies {
 testing {
     suites {
         val test by getting(JvmTestSuite::class) {
-            useKotlinTest("1.9.21")
+            useKotlinTest("2.0.20")
         }
     }
 }
