@@ -30,6 +30,8 @@ data class Vector2(val x: Int, val y: Int) {
         WEST -> Vector2(x, y - steps)
     }
 
+    fun adjacent() = setOf(north(), east(), south(), west())
+
     override fun toString() = "($x, $y)"
 
 }
