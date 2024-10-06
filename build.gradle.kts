@@ -2,9 +2,6 @@ plugins {
     kotlin("jvm") version "2.0.20"
 }
 
-group = "com.matthias"
-version = "1.0.0-SNAPSHOT"
-
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     testImplementation(kotlin("test"))

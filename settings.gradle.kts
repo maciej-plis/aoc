@@ -11,4 +11,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = "aoc2023"
+val name: String by settings
+rootProject.name = name
