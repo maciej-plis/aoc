@@ -6,47 +6,47 @@ import kotlin.io.path.readText
 import kotlin.test.assertEquals
 
 @TestInstance(PER_CLASS)
-internal class Day${day}Test {
+internal class Day22Test {
 
-    private val day${day} = Day${day}()
+    private val day22 = Day22()
 
     @BeforeAll
     fun setup() {
-        downloadAocInputFileIfMissing(${year}, ${day})
+        downloadAocInputFileIfMissing(2023, 22)
     }
 
     @Test
     fun part1_testInput() {
-        val input = readAocInputFile(${year}, ${day}, "part-1-test").readText()
+        val input = readAocInputFile(2023, 22, "part-1-test").readText()
 
-        val output = day${day}.solvePart1(input)
+        val output = day22.solvePart1(input)
 
         assertEquals(-1, output)
     }
 
     @Test
     fun part1_fullInput() {
-        val input = readAocInputFile(${year}, ${day}, "full").readText()
+        val input = readAocInputFile(2023, 22, "full").readText()
 
-        val output = day${day}.solvePart1(input)
+        val output = day22.solvePart1(input)
 
         assertEquals(-1, output)
     }
 
     @Test
     fun part2_testInput() {
-        val input = readAocInputFile(${year}, ${day}, "part-2-test").readText()
+        val input = readAocInputFile(2023, 22, "part-2-test").readText()
 
-        val output = day${day}.solvePart2(input)
+        val output = day22.solvePart2(input)
 
         assertEquals(-1, output)
     }
 
     @Test
     fun part2_fullInput() {
-        val input = readAocInputFile(${year}, ${day}, "full").readText()
+        val input = readAocInputFile(2023, 22, "full").readText()
 
-        val output = day${day}.solvePart2(input)
+        val output = day22.solvePart2(input)
 
         assertEquals(-1, output)
     }

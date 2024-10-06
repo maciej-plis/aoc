@@ -1,15 +1,23 @@
-import commons.readResourceFile
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import kotlin.io.path.readText
 import kotlin.test.assertEquals
 
+@TestInstance(PER_CLASS)
 internal class Day14Test {
 
     private val day14 = Day14()
 
+    @BeforeAll
+    fun setup() {
+        downloadAocInputFileIfMissing(2023, 14)
+    }
+
     @Test
     fun part1_testInput() {
-        val input = readResourceFile("day-14/part-1-test").readText()
+        val input = readAocInputFile(2023, 14, "part-1-test").readText()
 
         val output = day14.solvePart1(input)
 
@@ -18,7 +26,7 @@ internal class Day14Test {
 
     @Test
     fun part1_fullInput() {
-        val input = readResourceFile("day-14/full").readText()
+        val input = readAocInputFile(2023, 14, "full").readText()
 
         val output = day14.solvePart1(input)
 
@@ -27,7 +35,7 @@ internal class Day14Test {
 
     @Test
     fun part2_testInput() {
-        val input = readResourceFile("day-14/part-2-test").readText()
+        val input = readAocInputFile(2023, 14, "part-2-test").readText()
 
         val output = day14.solvePart2(input)
 
@@ -36,7 +44,7 @@ internal class Day14Test {
 
     @Test
     fun part2_fullInput() {
-        val input = readResourceFile("day-14/full").readText()
+        val input = readAocInputFile(2023, 14, "full").readText()
 
         val output = day14.solvePart2(input)
 

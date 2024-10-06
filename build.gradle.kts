@@ -30,24 +30,30 @@ java {
 }
 
 tasks.register("initDay") {
-    val day = properties["day"] ?: throw IllegalArgumentException("Undefined day!")
+    val year = properties["year"] ?: throw IllegalArgumentException("Missing year parameter!")
+    val day = properties["day"] ?: throw IllegalArgumentException("Missing day parameter!")
 
     copy {
         from("$projectDir/templates/source-template.txt")
         into("$projectDir/src/main/kotlin")
         rename { "Day${day}.kt" }
-        expand("day" to day)
+        expand(
+            "year" to year,
+            "day" to day
+        )
     }
 
     copy {
         from("$projectDir/templates/test-template.txt")
         into("$projectDir/src/test/kotlin")
         rename { "Day${day}Test.kt" }
-        expand("day" to day)
+        expand(
+            "year" to year,
+            "day" to day
+        )
     }
 
-    val dayResources = File("$projectDir/src/test/resources/day-${day}").apply { mkdirs() }
+    val dayResources = File("$projectDir/src/test/resources/$year/$day").apply { mkdirs() }
     File("$dayResources/part-1-test").createNewFile()
     File("$dayResources/part-2-test").createNewFile()
-    File("$dayResources/full").createNewFile()
 }
