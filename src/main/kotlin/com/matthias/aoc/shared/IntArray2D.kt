@@ -2,6 +2,8 @@ package com.matthias.aoc.shared
 
 typealias IntArray2D = Array<IntArray>
 
+fun IntArray2D(width: Int, height: Int) = Array(height) { IntArray(width) }
+
 fun String.to2DIntArray() = lines().map { it.map(Char::digitToInt).toIntArray() }.toTypedArray()
 operator fun IntArray2D.get(pos: Vector2): Int = this[pos.x][pos.y]
 operator fun IntArray2D.get(x: Int, y: Int): Int = this[x][y]
