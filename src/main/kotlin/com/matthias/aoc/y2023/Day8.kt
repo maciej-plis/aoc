@@ -1,18 +1,20 @@
 package com.matthias.aoc.y2023
 
 import com.matthias.aoc.shared.lcm
+import com.matthias.aoc.shared.splitByDoubleNewLine
+import java.lang.System.lineSeparator
 
 internal class Day8 {
 
     fun solvePart1(input: String): Int {
-        val (moves, networkInput) = input.split("\n\n")
+        val (moves, networkInput) = input.splitByDoubleNewLine()
         val network = parseNetwork(networkInput)
 
         return solve(moves, network, FIRST_NODE) { it == LAST_NODE }
     }
 
     fun solvePart2(input: String): Long {
-        val (moves, networkInput) = input.split("\n\n")
+        val (moves, networkInput) = input.splitByDoubleNewLine()
         val network = parseNetwork(networkInput)
 
         return network.keys

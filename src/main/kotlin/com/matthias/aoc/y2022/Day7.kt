@@ -21,8 +21,8 @@ class Day7 {
     private fun recreateFileSystem(input: String): FileSystem {
         val fileSystem = FileSystem()
 
-        input.split("\n$").drop(1)
-            .map { it.trim().split("\n") }
+        input.split("\r\n$", "\r$", "\n$").drop(1)
+            .map { it.trim().lines() }
             .forEach {
                 val command = parseCommand(it.first())
                 if (command is Ls) command.output.addAll(it.drop(1))

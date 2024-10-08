@@ -3,6 +3,7 @@ package com.matthias.aoc.y2023
 import com.matthias.aoc.shared.charAt
 import com.matthias.aoc.shared.replace
 import com.matthias.aoc.shared.size
+import com.matthias.aoc.shared.splitByDoubleNewLineToSequence
 import com.matthias.aoc.y2023.Day13.Reflection.Type.HORIZONTAL
 import com.matthias.aoc.y2023.Day13.Reflection.Type.VERTICAL
 import kotlin.math.min
@@ -18,7 +19,7 @@ internal class Day13 {
     }
 
     fun solvePart1(input: String): Int {
-        return input.splitToSequence("\n\n")
+        return input.splitByDoubleNewLineToSequence()
             .map { it.lines() }
             .map { findReflection(it)!! }
             .map { computeResult(it) }
@@ -26,7 +27,7 @@ internal class Day13 {
     }
 
     fun solvePart2(input: String): Int {
-        return input.splitToSequence("\n\n")
+        return input.splitByDoubleNewLineToSequence()
             .map { it.lines() }
             .map { it to findReflection(it)!! }
             .map { (pattern, reflection) -> findSmudgedReflection(pattern, reflection)!! }

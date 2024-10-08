@@ -1,5 +1,7 @@
 package com.matthias.aoc.shared
 
+import java.lang.System.lineSeparator
+
 typealias CharArray2D = Array<CharArray>
 
 fun String.to2DCharArray() = lines().map { it.toCharArray() }.toTypedArray()
@@ -24,7 +26,7 @@ fun CharArray2D.swapValues(pos1: Vector2, pos2: Vector2) {
     this[pos1].let { this[pos1] = this[pos2]; this[pos2] = it }
 }
 
-fun CharArray2D.join2DArrayToString(itemSeparator: String = "", lineSeparator: String = "\n") =
+fun CharArray2D.join2DArrayToString(itemSeparator: String = "", lineSeparator: String = lineSeparator()) =
     joinToString(lineSeparator) { it.joinToString(itemSeparator) }
 
 fun CharArray2D.deepCopy() = Array(size) { get(it).clone() }

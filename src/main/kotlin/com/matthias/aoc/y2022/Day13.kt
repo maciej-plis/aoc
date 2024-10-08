@@ -1,5 +1,6 @@
 package com.matthias.aoc.y2022
 
+import com.matthias.aoc.shared.splitByDoubleNewLine
 import kotlin.math.min
 
 class Day13 {
@@ -61,8 +62,8 @@ class Day13 {
     }
 
     private fun parseInputToPacketPairs(input: String) = input
-        .split("\n\n")
-        .map { it.split("\n") }
+        .splitByDoubleNewLine()
+        .map { it.lines() }
         .map { it.map { parsePacket(it) } }
 
     private fun parsePacket(line: String): PacketList {

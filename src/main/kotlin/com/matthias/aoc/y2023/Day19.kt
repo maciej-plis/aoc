@@ -1,9 +1,6 @@
 package com.matthias.aoc.y2023
 
-import com.matthias.aoc.shared.findValue
-import com.matthias.aoc.shared.findValues
-import com.matthias.aoc.shared.product
-import com.matthias.aoc.shared.size
+import com.matthias.aoc.shared.*
 
 private val PART_RATING_REGEX = """(?<ratingCode>[a-z])=(?<rating>\d+)""".toRegex()
 private val WORKFLOW_NAME_REGEX = """^(?<workflowName>[a-z]+)\{.*}$""".toRegex()
@@ -31,7 +28,7 @@ internal class Day19 {
     }
 
     fun solvePart1(input: String): Int {
-        val (workflowsInput, partsInput) = input.split("\n\n")
+        val (workflowsInput, partsInput) = input.splitByDoubleNewLine()
         val workflows = parseWorkflows(workflowsInput)
 
         return partsInput.lineSequence()
@@ -41,7 +38,7 @@ internal class Day19 {
     }
 
     fun solvePart2(input: String): Long {
-        val (workflowsInput, _) = input.split("\n\n")
+        val (workflowsInput, _) = input.splitByDoubleNewLine()
         val workflows = parseWorkflows(workflowsInput)
 
         val ratingRange = 1..4000

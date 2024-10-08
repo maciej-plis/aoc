@@ -1,5 +1,11 @@
 package com.matthias.aoc.shared
 
+fun String.splitByDoubleNewLine(ignoreCase: Boolean = false, limit: Int = 0) =
+    split("\r\n\r\n", "\r\r", "\n\n", ignoreCase = ignoreCase, limit = limit)
+
+fun String.splitByDoubleNewLineToSequence(ignoreCase: Boolean = false, limit: Int = 0) =
+    splitToSequence("\r\n\r\n", "\r\r", "\n\n", ignoreCase = ignoreCase, limit = limit)
+
 fun String.splitByWs() = split("\\s+".toRegex())
 fun String.splitByWsToSequence() = splitToSequence("\\s+".toRegex())
 

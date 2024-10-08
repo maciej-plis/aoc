@@ -1,5 +1,6 @@
 package com.matthias.aoc.y2023
 
+import com.matthias.aoc.shared.splitByDoubleNewLine
 import kotlin.math.max
 import kotlin.math.min
 
@@ -8,10 +9,10 @@ internal class Day5 {
     data class Mapping(val sourceRange: LongRange, val change: Long)
 
     fun solvePart1(input: String): Long {
-        val (seedsInput, mappingsInput) = input.split("\n\n", limit = 2)
+        val (seedsInput, mappingsInput) = input.splitByDoubleNewLine(limit = 2)
 
         val seeds = seedsInput.drop("seeds: ".length).split("\\s+".toRegex()).map { it.toLong() }
-        val mappingGroups = mappingsInput.split("\n\n").map {
+        val mappingGroups = mappingsInput.splitByDoubleNewLine().map {
             it.lines().drop(1).map {
                 val (dest, source, range) = it.split("\\s+".toRegex()).map { it.toLong() }
                 Mapping(source..<source + range, dest - source)
@@ -30,14 +31,14 @@ internal class Day5 {
     }
 
     fun solvePart2(input: String): Long {
-        val (seedsInput, mappingsInput) = input.split("\n\n", limit = 2)
+        val (seedsInput, mappingsInput) = input.splitByDoubleNewLine(limit = 2)
 
         val seedRanges = seedsInput.drop("seeds: ".length)
             .split("\\s+".toRegex()).map { it.toLong() }
             .chunked(2)
             .map { (start, range) -> start..<start + range }
 
-        val mappingGroups = mappingsInput.split("\n\n").map {
+        val mappingGroups = mappingsInput.splitByDoubleNewLine().map {
             it.lines().drop(1).map {
                 val (dest, source, range) = it.split("\\s+".toRegex()).map { it.toLong() }
                 Mapping(source..<source + range, dest - source)
