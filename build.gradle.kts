@@ -32,7 +32,7 @@ tasks.register("initDay") {
 
     copy {
         from("$projectDir/templates/source-template.txt")
-        into("$projectDir/src/main/kotlin")
+        into("$projectDir/src/main/kotlin/com/matthias/aoc/y${year}")
         rename { "Day${day}.kt" }
         expand(
             "year" to year,
@@ -42,7 +42,7 @@ tasks.register("initDay") {
 
     copy {
         from("$projectDir/templates/test-template.txt")
-        into("$projectDir/src/test/kotlin")
+        into("$projectDir/src/test/kotlin/com/matthias/aoc/y${year}")
         rename { "Day${day}Test.kt" }
         expand(
             "year" to year,

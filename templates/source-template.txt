@@ -1,3 +1,5 @@
+package com.matthias.aoc.y${year}
+
 internal class Day${day} {
 
     fun solvePart1(input: String): Int {
