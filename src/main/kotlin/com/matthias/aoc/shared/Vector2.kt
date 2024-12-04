@@ -1,9 +1,6 @@
 package com.matthias.aoc.shared
 
-import com.matthias.aoc.shared.Direction.EAST
-import com.matthias.aoc.shared.Direction.NORTH
-import com.matthias.aoc.shared.Direction.SOUTH
-import com.matthias.aoc.shared.Direction.WEST
+import com.matthias.aoc.shared.Direction.*
 
 data class Vector2(val x: Int, val y: Int) {
 
@@ -18,6 +15,11 @@ data class Vector2(val x: Int, val y: Int) {
 
     fun right() = Vector2(x, (y + 1))
     fun east() = right()
+
+    fun northWest() = Vector2((x - 1), (y - 1))
+    fun northEast() = Vector2((x - 1), (y + 1))
+    fun southEast() = Vector2((x + 1), (y + 1))
+    fun southWest() = Vector2((x + 1), (y - 1))
 
     fun oneTo(direction: Direction) = when (direction) {
         NORTH -> north()
@@ -34,6 +36,8 @@ data class Vector2(val x: Int, val y: Int) {
     }
 
     fun adjacent() = setOf(north(), east(), south(), west())
+
+    fun surrounding() = setOf(northWest(), north(), northEast(), east(), southEast(), south(), southWest(), west())
 
     override fun toString() = "($x, $y)"
 
